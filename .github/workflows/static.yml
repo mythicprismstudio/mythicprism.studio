@@ -1,0 +1,700 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MYTHIC PRISM STUDIO</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Bebas+Neue&family=Oswald:wght@300;400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+<style>
+:root{--s0:#fdf6e8;--s1:#f0ddb8;--s2:#e8c97a;--s3:#d4b483;--s4:#c9a84c;--s5:#b8965a;--s6:#9a7a3a;--s7:#6a5020;--ink:#080604;--ink2:#0f0c06;--ink3:#181008;--ink4:#221808;--red:#6b1a1a;--red2:#8b2020;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;min-height:100vh;background:var(--ink);color:var(--s1);font-family:'Courier Prime',monospace;overflow-x:hidden}
+#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#sc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0;transition:opacity .5s}
+.page{position:relative;z-index:2;min-height:100vh;display:none}.page.active{display:block}
+nav{position:fixed;top:0;left:0;width:100%;z-index:100;background:var(--ink);border-bottom:2px solid var(--s7);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px}
+.nl{font-family:'UnifrakturMaguntia',serif;font-size:22px;color:var(--s2);letter-spacing:2px;cursor:pointer}
+.nbs{display:flex}.nb{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:3px;color:var(--s5);background:none;border:none;border-left:1px solid var(--s7);padding:0 20px;height:56px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.nb:hover,.nb.active{color:var(--s2);background:var(--ink3)}
+@keyframes shi{0%{background-position:200% center}100%{background-position:-200% center}}
+.sh{background:linear-gradient(90deg,var(--s6),var(--s2),var(--s4),var(--s1),var(--s4),var(--s2),var(--s6));background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shi 6s linear infinite}
+@keyframes gp{0%,100%{opacity:.7}50%{opacity:1;filter:brightness(1.5)}}
+.hw{padding-top:56px;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.hh{width:100%;max-width:1100px;padding:60px 24px 40px;text-align:center}
+.ey{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:6px;color:var(--s6);text-transform:uppercase;margin-bottom:16px}
+.ht{font-family:'UnifrakturMaguntia',serif;font-size:clamp(52px,10vw,110px);line-height:.9;color:var(--s2);margin-bottom:8px}
+.hs{font-family:'Bebas Neue',cursive;font-size:clamp(18px,4vw,36px);letter-spacing:8px;color:var(--s5);margin-bottom:32px}
+.hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,var(--s4),transparent);margin:0 auto 32px}
+.hd{max-width:560px;margin:0 auto 48px;font-size:14px;line-height:1.8;color:var(--s3);letter-spacing:.5px}
+.ss{width:100%;max-width:860px;padding:0 24px 60px}
+.sl{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:5px;color:var(--s6);text-transform:uppercase;margin-bottom:20px;text-align:center;border-top:1px solid var(--s7);padding-top:20px}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.sb{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 12px;border:1px solid var(--s7);background:var(--ink2);color:var(--s3);text-decoration:none;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;transition:all .25s;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(201,168,76,.06));pointer-events:none}
+.sb:hover{border-color:var(--s4);color:var(--s2);background:var(--ink3)}
+.si{font-size:28px;margin-bottom:8px;animation:gp 3s ease-in-out infinite}.su{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:3px;color:var(--s6);margin-top:6px}
+.gp2{padding-top:56px;min-height:100vh}.gh{padding:40px 24px 30px;border-bottom:2px solid var(--s7);display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.gn{font-family:'Bebas Neue',cursive;font-size:80px;line-height:1;color:var(--s7)}.gt{font-family:'UnifrakturMaguntia',serif;font-size:36px;color:var(--s2)}
+.gs{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:4px;color:var(--s6);text-transform:uppercase;margin-left:auto}
+.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;padding:2px}
+.gc{background:var(--ink2);border:1px solid var(--s7);overflow:hidden;cursor:pointer;transition:border-color .2s;display:flex;flex-direction:column}.gc:hover{border-color:var(--s4)}
+.gi{width:100%;aspect-ratio:4/5;background:var(--ink3);overflow:hidden;display:flex;align-items:center;justify-content:center}.gi svg{width:100%;height:100%}
+.gii{padding:14px 16px;border-top:1px solid var(--s7)}.gnum{font-family:'Bebas Neue',cursive;font-size:28px;color:var(--s7);line-height:1}
+.gtt{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;color:var(--s2);text-transform:uppercase;margin-top:2px}
+.gd{font-size:10px;color:var(--s6);letter-spacing:1px;margin-top:4px;font-family:'Oswald',sans-serif}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px;padding:2px}
+.mc{background:var(--ink2);border:1px solid var(--s7);overflow:hidden;transition:border-color .2s}.mc:hover{border-color:var(--s4)}
+.mi{width:100%;aspect-ratio:1;background:var(--ink3);overflow:hidden;display:flex;align-items:center;justify-content:center}.mi svg{width:100%;height:100%}
+.mii{padding:10px 12px;border-top:1px solid var(--s7)}.mt{font-family:'Bebas Neue',cursive;font-size:15px;letter-spacing:2px;color:var(--s3)}
+.str{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:2px;border-top:2px solid var(--s7);margin-top:2px}
+.stl{display:flex;flex-direction:column;align-items:center;padding:18px 8px;border:1px solid var(--s7);background:var(--ink2);text-decoration:none;transition:border-color .2s}.stl:hover{border-color:var(--s4)}
+.std{width:34px;height:34px;border-radius:50%;margin-bottom:8px}.stn{font-family:'Bebas Neue',cursive;font-size:14px;letter-spacing:2px;color:var(--s5)}.sts{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:2px;color:var(--s7);margin-top:3px}
+.rb{width:100%;text-align:center;padding:12px 0;font-size:18px;color:var(--s7);letter-spacing:8px;border-top:1px solid var(--s7)}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas><canvas id="sc"></canvas>
+<nav>
+  <div class="nl" onclick="sp('home')">⧫ Mythic Prism</div>
+  <div class="nbs">
+    <button class="nb active" onclick="sp('home')" id="nb-home">Home</button>
+    <button class="nb" onclick="sp('patterns')" id="nb-patterns">Patterns</button>
+    <button class="nb" onclick="sp('mythology')" id="nb-mythology">Mythology</button>
+    <button class="nb" onclick="sp('mixed')" id="nb-mixed">Mixed</button>
+  </div>
+</nav>
+
+<section class="page active" id="page-home">
+<div class="hw">
+  <div class="hh">
+    <div class="ey">∴ Est. MMXXIV · Print on Demand · Mythic &amp; Gothic ∴</div>
+    <div class="ht sh">Mythic<br>Prism</div>
+    <div class="hs">Studio</div>
+    <div class="hr"></div>
+    <p class="hd">Where Norse myth meets gothic shadow — original wearable art, tiling patterns &amp; mythological illustration for the bold and the arcane.</p>
+  </div>
+  <div class="ss">
+    <div class="sl">∴ Shop our Collections ∴</div>
+    <div class="sg">
+      <a class="sb" href="https://mythic-prism-studio-shop.fourthwall.com" target="_blank"><span class="si">⧫</span>Fourthwall<span class="su">Main Store</span></a>
+      <a class="sb" href="https://wwwmythosprismcom.creator-spring.com" target="_blank"><span class="si">◈</span>Spring<span class="su">Merch Store</span></a>
+      <a class="sb" href="#" target="_blank"><span class="si">⬡</span>Flyp<span class="su">Social Commerce</span></a>
+      <a class="sb" href="https://app.amazecommerce.com/shop/mythic-prism-studio" target="_blank"><span class="si">◆</span>AmazeCommerce<span class="su">Digital Storefront</span></a>
+    </div>
+  </div>
+  <div class="rb">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ</div>
+</div>
+</section>
+
+<section class="page" id="page-patterns">
+<div class="gp2">
+  <div class="gh"><div class="gn">02</div><div class="gt">Tiling Designs</div><div class="gs">Gothic &amp; Mythical</div></div>
+  <div class="gg">
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="bg1" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#221808"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="f1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <pattern id="kt" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+        <path d="M40 0C40 20 60 20 60 40C60 60 40 60 40 80" fill="none" stroke="#c9a84c" stroke-width="6" stroke-linecap="round"/>
+        <path d="M0 40C20 40 20 60 40 60C60 60 60 40 80 40" fill="none" stroke="#c9a84c" stroke-width="6" stroke-linecap="round"/>
+        <path d="M40 0C40 20 20 20 20 40C20 60 40 60 40 80" fill="none" stroke="#9a7a3a" stroke-width="6" stroke-linecap="round"/>
+        <path d="M0 40C20 40 20 20 40 20C60 20 60 40 80 40" fill="none" stroke="#9a7a3a" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="40" cy="40" r="5" fill="#221808"/><circle cx="40" cy="40" r="3" fill="#e8c97a"/>
+      </pattern></defs>
+      <rect width="400" height="500" fill="url(#bg1)"/>
+      <rect width="400" height="500" fill="url(#kt)" opacity=".85"/>
+      <circle cx="200" cy="248" r="90" fill="none" stroke="#c9a84c" stroke-width="2" filter="url(#f1)"/>
+      <circle cx="200" cy="248" r="70" fill="none" stroke="#6a5020" stroke-width="1"/>
+      <circle cx="200" cy="248" r="12" fill="#c9a84c" filter="url(#f1)"/><circle cx="200" cy="248" r="5" fill="#fdf6e8"/>
+      <text x="30" y="55" font-family="serif" font-size="28" fill="#6a5020" opacity=".8">ᚠ</text><text x="355" y="55" font-family="serif" font-size="28" fill="#6a5020" opacity=".8">ᚢ</text>
+      <text x="30" y="490" font-family="serif" font-size="28" fill="#6a5020" opacity=".8">ᚦ</text><text x="355" y="490" font-family="serif" font-size="28" fill="#6a5020" opacity=".8">ᚨ</text>
+      <rect x="0" y="440" width="400" height="60" fill="rgba(8,6,4,.9)"/>
+      <text x="200" y="468" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="22" letter-spacing="6" fill="#c9a84c">CELTIC KNOTWORK</text>
+      <text x="200" y="488" text-anchor="middle" font-family="sans-serif" font-size="10" letter-spacing="3" fill="#6a5020">TRIQUETRA · TILING PATTERN</text>
+    </svg></div><div class="gii"><div class="gnum">01</div><div class="gtt">Celtic Knotwork</div><div class="gd">Interlaced triquetra · repeat tile</div></div></div>
+
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="bg2" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#1a1008"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="f2"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <pattern id="sd" x="0" y="0" width="100" height="120" patternUnits="userSpaceOnUse">
+        <ellipse cx="50" cy="48" rx="22" ry="26" fill="none" stroke="#6a5020" stroke-width="1.2"/>
+        <ellipse cx="43" cy="50" rx="7" ry="8" fill="#080604" stroke="#9a7a3a" stroke-width=".8"/>
+        <ellipse cx="57" cy="50" rx="7" ry="8" fill="#080604" stroke="#9a7a3a" stroke-width=".8"/>
+        <path d="M40 65L43 62L47 64L50 62L53 64L57 62L60 65" fill="none" stroke="#6a5020" stroke-width="1"/>
+        <path d="M50 22C45 18 38 20 36 26C30 24 26 30 28 36" fill="none" stroke="#6a5020" stroke-width=".8"/>
+        <path d="M50 22C55 18 62 20 64 26C70 24 74 30 72 36" fill="none" stroke="#6a5020" stroke-width=".8"/>
+        <polygon points="50,12 54,16 50,20 46,16" fill="#9a7a3a" opacity=".5"/>
+      </pattern></defs>
+      <rect width="400" height="500" fill="url(#bg2)"/><rect width="400" height="500" fill="url(#sd)" opacity=".8"/>
+      <ellipse cx="200" cy="228" rx="70" ry="82" fill="#0f0c06" stroke="#c9a84c" stroke-width="2.5" filter="url(#f2)"/>
+      <ellipse cx="178" cy="226" rx="22" ry="26" fill="#080604" stroke="#b8965a" stroke-width="1.5"/>
+      <ellipse cx="222" cy="226" rx="22" ry="26" fill="#080604" stroke="#b8965a" stroke-width="1.5"/>
+      <circle cx="178" cy="226" r="8" fill="#c9a84c" opacity=".35" filter="url(#f2)"/>
+      <circle cx="222" cy="226" r="8" fill="#c9a84c" opacity=".35" filter="url(#f2)"/>
+      <path d="M166 273L172 266L178 270L184 266L196 270L208 266L220 270L226 266L234 273" fill="none" stroke="#b8965a" stroke-width="2"/>
+      <rect x="0" y="440" width="400" height="60" fill="rgba(8,6,4,.9)"/>
+      <text x="200" y="468" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="22" letter-spacing="6" fill="#c9a84c">SKULL DAMASK</text>
+      <text x="200" y="488" text-anchor="middle" font-family="sans-serif" font-size="10" letter-spacing="3" fill="#6a5020">GOTHIC · REPEAT TILE</text>
+    </svg></div><div class="gii"><div class="gnum">02</div><div class="gtt">Skull Damask</div><div class="gd">Victorian gothic repeat pattern</div></div></div>
+
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="bg3" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#1a1408"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <radialGradient id="ga3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c9a84c" stop-opacity=".3"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient>
+      <filter id="f3"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="400" height="500" fill="url(#bg3)"/>
+      <circle cx="200" cy="248" r="175" fill="url(#ga3)"/>
+      <circle cx="200" cy="248" r="160" fill="none" stroke="#6a5020" stroke-width="1"/>
+      <text x="200" y="90" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚠ</text>
+      <text x="306" y="132" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚢ</text>
+      <text x="352" y="254" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚦ</text>
+      <text x="306" y="376" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚨ</text>
+      <text x="200" y="416" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚱ</text>
+      <text x="94" y="376" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚲ</text>
+      <text x="48" y="254" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚷ</text>
+      <text x="94" y="132" text-anchor="middle" font-size="16" fill="#9a7a3a" font-family="serif">ᚹ</text>
+      <line x1="200" y1="248" x2="200" y2="120" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="190" y1="148" x2="200" y2="120" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="200" y1="248" x2="291" y2="157" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="200" y1="248" x2="328" y2="248" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="300" y1="238" x2="328" y2="248" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="300" y1="258" x2="328" y2="248" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="200" y1="248" x2="291" y2="339" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="200" y1="248" x2="200" y2="376" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="190" y1="348" x2="200" y2="376" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="210" y1="348" x2="200" y2="376" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="200" y1="248" x2="109" y2="339" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="200" y1="248" x2="72" y2="248" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <line x1="100" y1="238" x2="72" y2="248" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="100" y1="258" x2="72" y2="248" stroke="#c9a84c" stroke-width="2"/>
+      <line x1="200" y1="248" x2="109" y2="157" stroke="#c9a84c" stroke-width="3" filter="url(#f3)"/>
+      <circle cx="200" cy="248" r="30" fill="none" stroke="#b8965a" stroke-width="2"/>
+      <circle cx="200" cy="248" r="18" fill="#1a1408" stroke="#c9a84c" stroke-width="1.5" filter="url(#f3)"/>
+      <circle cx="200" cy="248" r="8" fill="#c9a84c" opacity=".9" filter="url(#f3)"/>
+      <circle cx="200" cy="248" r="4" fill="#fdf6e8"/>
+      <circle cx="200" cy="248" r="60" fill="none" stroke="#6a5020" stroke-width="1" stroke-dasharray="4 4"/>
+      <rect x="0" y="440" width="400" height="60" fill="rgba(8,6,4,.9)"/>
+      <text x="200" y="468" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="22" letter-spacing="6" fill="#c9a84c">VEGVISIR</text>
+      <text x="200" y="488" text-anchor="middle" font-family="sans-serif" font-size="10" letter-spacing="3" fill="#6a5020">NORSE WAYFINDER · COMPASS</text>
+    </svg></div><div class="gii"><div class="gnum">03</div><div class="gtt">Vegvisir</div><div class="gd">Norse runic wayfinder compass</div></div></div>
+
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="bg4" cx="50%" cy="48%" r="65%"><stop offset="0%" stop-color="#200e06"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="f4"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="400" height="500" fill="url(#bg4)"/>
+      <circle cx="200" cy="245" r="178" fill="none" stroke="#6a5020" stroke-width="2"/>
+      <g stroke="#c9a84c" stroke-width="1.5" fill="none" filter="url(#f4)">
+        <path d="M200 245L200 75Q215 160 230 245"/><path d="M200 245L200 75Q185 160 170 245"/>
+        <path d="M200 245L340 170Q268 220 245 245"/><path d="M200 245L340 320Q280 270 255 255"/>
+        <path d="M200 245L200 415Q215 330 230 245"/><path d="M200 245L200 415Q185 330 170 245"/>
+        <path d="M200 245L60 320Q132 270 155 255"/><path d="M200 245L60 170Q132 220 155 245"/>
+      </g>
+      <circle cx="200" cy="245" r="35" fill="none" stroke="#c9a84c" stroke-width="2" filter="url(#f4)"/>
+      <polygon points="200,215 220,245 200,275 180,245" fill="none" stroke="#e8c97a" stroke-width="2" filter="url(#f4)"/>
+      <circle cx="200" cy="245" r="10" fill="#c9a84c" opacity=".8" filter="url(#f4)"/>
+      <circle cx="200" cy="245" r="4" fill="#fdf6e8"/>
+      <rect x="0" y="440" width="400" height="60" fill="rgba(8,6,4,.9)"/>
+      <text x="200" y="468" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="22" letter-spacing="6" fill="#c9a84c">GOTHIC ROSE</text>
+      <text x="200" y="488" text-anchor="middle" font-family="sans-serif" font-size="10" letter-spacing="3" fill="#6a5020">CATHEDRAL WINDOW · GEOMETRIC</text>
+    </svg></div><div class="gii"><div class="gnum">04</div><div class="gtt">Gothic Rose Window</div><div class="gd">Cathedral geometric tile design</div></div></div>
+  </div>
+</div>
+</section>
+
+<section class="page" id="page-mythology">
+<div class="gp2">
+  <div class="gh"><div class="gn">03</div><div class="gt">Mythology</div><div class="gs">Hero Illustrations</div></div>
+  <div class="gg">
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="ob" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#1a0e04"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+        <radialGradient id="oa" cx="50%" cy="35%" r="45%"><stop offset="0%" stop-color="#c9a84c" stop-opacity=".18"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient>
+        <radialGradient id="of2" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#c9a84c"/><stop offset="60%" stop-color="#b8965a"/><stop offset="100%" stop-color="#6a5020"/></radialGradient>
+        <radialGradient id="oe" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fdf6e8"/><stop offset="40%" stop-color="#e8c97a"/><stop offset="100%" stop-color="#9a7a3a"/></radialGradient>
+        <filter id="og"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="ocl" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1408"/><stop offset="100%" stop-color="#0a0806"/></linearGradient>
+        <linearGradient id="obrd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4b483"/><stop offset="100%" stop-color="#9a7a3a"/></linearGradient>
+      </defs>
+      <rect width="400" height="500" fill="url(#ob)"/><rect width="400" height="500" fill="url(#oa)"/>
+      <text x="42" y="90" font-size="13" fill="#221808" font-family="serif" opacity=".6">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ</text>
+      <path d="M80 500L60 350L90 260L120 200Q200 160 280 200L310 260L340 350L320 500Z" fill="url(#ocl)"/>
+      <path d="M130 220Q140 300 110 400" fill="none" stroke="#2a1e0c" stroke-width="1" opacity=".5"/>
+      <path d="M270 220Q260 300 290 400" fill="none" stroke="#2a1e0c" stroke-width="1" opacity=".5"/>
+      <path d="M120 200Q200 175 280 200" fill="none" stroke="#9a7a3a" stroke-width="2"/>
+      <rect x="180" y="195" width="40" height="35" fill="#8a6a30" rx="4"/>
+      <ellipse cx="200" cy="170" rx="68" ry="80" fill="url(#of2)"/>
+      <path d="M132 80Q200 20 268 80Q290 120 285 155L270 160Q240 130 200 128Q160 130 130 160L115 155Q110 120 132 80Z" fill="#0f0c06"/>
+      <ellipse cx="200" cy="148" rx="62" ry="28" fill="#0f0c06" opacity=".75"/>
+      <path d="M138 155Q200 140 262 155L265 168Q200 158 135 168Z" fill="#b8965a"/>
+      <path d="M145 162Q170 155 183 162" fill="none" stroke="#4a3010" stroke-width="4" stroke-linecap="round"/>
+      <path d="M217 162Q230 155 255 162" fill="none" stroke="#4a3010" stroke-width="4" stroke-linecap="round"/>
+      <path d="M148 175Q163 170 178 175" fill="none" stroke="#4a2808" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="155" y1="165" x2="170" y2="185" stroke="#3a1806" stroke-width="1.5" opacity=".7"/>
+      <ellipse cx="228" cy="176" rx="16" ry="12" fill="#181008"/>
+      <ellipse cx="228" cy="176" rx="13" ry="10" fill="url(#oe)" filter="url(#og)"/>
+      <circle cx="228" cy="176" r="7" fill="#c9a84c"/>
+      <circle cx="228" cy="176" r="4" fill="#4a2000"/>
+      <circle cx="231" cy="173" r="2" fill="white" opacity=".6"/>
+      <path d="M196 168L192 200L188 208Q200 216 212 208L208 200L204 168" fill="#a07840"/>
+      <path d="M178 210Q200 206 222 210Q215 225 200 222Q185 225 178 210Z" fill="#9a7a3a"/>
+      <path d="M165 240Q160 295 158 355Q168 400 178 425Q188 405 190 362Q195 310 192 262Z" fill="url(#obrd)" opacity=".9"/>
+      <path d="M192 262Q198 320 200 385Q204 418 212 445Q220 415 220 368Q220 312 222 262Z" fill="url(#obrd)"/>
+      <path d="M222 262Q226 318 230 368Q234 405 226 438Q238 415 244 375Q248 330 242 260Z" fill="url(#obrd)" opacity=".8"/>
+      <g transform="translate(90,200)"><ellipse cx="0" cy="0" rx="20" ry="12" fill="#1a1408" stroke="#6a5020" stroke-width="1"/>
+        <circle cx="-8" cy="-8" r="10" fill="#1a1408" stroke="#6a5020" stroke-width="1"/>
+        <polygon points="-18,-10 -26,-6 -18,-2" fill="#c9a84c"/>
+        <circle cx="-11" cy="-10" r="3" fill="#c9a84c" opacity=".8"/>
+        <path d="M-5 0Q-20-20-35-10Q-25 5-5 8" fill="#1a1408" stroke="#6a5020" stroke-width=".8"/>
+      </g>
+      <g transform="translate(310,200) scale(-1,1)"><ellipse cx="0" cy="0" rx="20" ry="12" fill="#1a1408" stroke="#6a5020" stroke-width="1"/>
+        <circle cx="-8" cy="-8" r="10" fill="#1a1408" stroke="#6a5020" stroke-width="1"/>
+        <polygon points="-18,-10 -26,-6 -18,-2" fill="#c9a84c"/>
+        <circle cx="-11" cy="-10" r="3" fill="#c9a84c" opacity=".8"/>
+        <path d="M-5 0Q-20-20-35-10Q-25 5-5 8" fill="#1a1408" stroke="#6a5020" stroke-width=".8"/>
+      </g>
+      <line x1="340" y1="30" x2="290" y2="480" stroke="#9a7a3a" stroke-width="3"/>
+      <polygon points="340,30 330,55 350,55" fill="#c9a84c"/>
+      <rect x="0" y="440" width="400" height="60" fill="rgba(8,6,4,.92)"/>
+      <text x="200" y="466" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="26" letter-spacing="8" fill="#c9a84c">ODIN</text>
+      <text x="200" y="486" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="10" letter-spacing="4" fill="#6a5020">THE ALLFATHER · NORSE MYTHOLOGY</text>
+    </svg></div><div class="gii"><div class="gnum">01</div><div class="gtt">Odin the Allfather</div><div class="gd">Norse god · ravens &amp; Gungnir</div></div></div>
+
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="frb" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#1a0e0a"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+        <radialGradient id="fra" cx="50%" cy="35%" r="50%"><stop offset="0%" stop-color="#c9a84c" stop-opacity=".22"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient>
+        <radialGradient id="frf" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#e8c97a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#8a6030"/></radialGradient>
+        <radialGradient id="fre" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fdf6e8"/><stop offset="40%" stop-color="#9adfdf"/><stop offset="100%" stop-color="#4a8a8a"/></radialGradient>
+        <filter id="frg"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="frh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8c97a"/><stop offset="50%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#9a7a3a"/></linearGradient>
+      </defs>
+      <rect width="400" height="500" fill="url(#frb)"/><rect width="400" height="500" fill="url(#fra)"/>
+      <path d="M100 500L90 320Q140 260 200 245Q260 260 310 320L300 500Z" fill="#1a0e0e"/>
+      <path d="M90 320Q140 260 200 245Q260 260 310 320" fill="none" stroke="#6b1a1a" stroke-width="1.5"/>
+      <path d="M140 130Q100 160 90 220Q80 280 85 350Q90 400 100 450" fill="none" stroke="url(#frh)" stroke-width="18" stroke-linecap="round"/>
+      <path d="M260 130Q300 160 310 220Q320 280 315 350Q310 400 300 450" fill="none" stroke="url(#frh)" stroke-width="18" stroke-linecap="round"/>
+      <path d="M140 130Q200 105 260 130" fill="none" stroke="#e8c97a" stroke-width="8" stroke-linecap="round"/>
+      <rect x="182" y="210" width="36" height="36" fill="#c9a84c" rx="3"/>
+      <path d="M155 246Q180 258 200 260Q220 258 245 246" fill="none" stroke="#c9a84c" stroke-width="2" filter="url(#frg)"/>
+      <ellipse cx="200" cy="262" rx="7" ry="5" fill="#e8c97a" stroke="#9a7a3a" stroke-width="1" filter="url(#frg)"/>
+      <ellipse cx="178" cy="256" rx="6" ry="4" fill="#c9a84c" stroke="#9a7a3a" stroke-width="1"/>
+      <ellipse cx="222" cy="256" rx="6" ry="4" fill="#c9a84c" stroke="#9a7a3a" stroke-width="1"/>
+      <ellipse cx="200" cy="170" rx="60" ry="72" fill="url(#frf)"/>
+      <path d="M148 118L155 95L165 118" fill="#b8965a" stroke="#9a7a3a" stroke-width="1"/>
+      <path d="M190 106L200 80L210 106" fill="#e8c97a" stroke="#b8965a" stroke-width="1" filter="url(#frg)"/>
+      <path d="M235 118L245 95L255 118" fill="#b8965a" stroke="#9a7a3a" stroke-width="1"/>
+      <path d="M145 120Q200 108 255 120" fill="#9a7a3a" stroke="#c9a84c" stroke-width="1"/>
+      <circle cx="200" cy="114" r="6" fill="#c9a84c" filter="url(#frg)"/>
+      <path d="M155 165Q172 158 185 165Q172 175 155 165Z" fill="#1a0a04"/>
+      <ellipse cx="170" cy="165" rx="10" ry="8" fill="url(#fre)" filter="url(#frg)"/>
+      <circle cx="170" cy="165" r="5" fill="#2a5a5a"/><circle cx="170" cy="165" r="2" fill="#0a1010"/>
+      <circle cx="172" cy="163" r="1.5" fill="white" opacity=".7"/>
+      <path d="M215 165Q228 158 245 165Q228 175 215 165Z" fill="#1a0a04"/>
+      <ellipse cx="230" cy="165" rx="10" ry="8" fill="url(#fre)" filter="url(#frg)"/>
+      <circle cx="230" cy="165" r="5" fill="#2a5a5a"/><circle cx="230" cy="165" r="2" fill="#0a1010"/>
+      <circle cx="232" cy="163" r="1.5" fill="white" opacity=".7"/>
+      <path d="M152 156Q172 148 186 154" fill="none" stroke="#5a3010" stroke-width="2" stroke-linecap="round"/>
+      <path d="M214 154Q228 148 246 156" fill="none" stroke="#5a3010" stroke-width="2" stroke-linecap="round"/>
+      <path d="M178 205Q200 198 222 205Q212 216 200 214Q188 216 178 205Z" fill="#8b2020"/>
+      <g transform="translate(90,400)">
+        <ellipse cx="0" cy="15" rx="22" ry="14" fill="#2a1a0a" stroke="#6a5020" stroke-width="1"/>
+        <circle cx="-6" cy="-2" r="12" fill="#2a1a0a" stroke="#6a5020" stroke-width="1"/>
+        <polygon points="-13,-14 -10,-6 -6,-12" fill="#2a1a0a" stroke="#6a5020" stroke-width=".8"/>
+        <circle cx="-6" cy="-3" r="4" fill="#c9a84c" opacity=".7"/><circle cx="-6" cy="-3" r="2" fill="#1a1008"/>
+      </g>
+      <g transform="translate(310,400) scale(-1,1)">
+        <ellipse cx="0" cy="15" rx="22" ry="14" fill="#2a1a0a" stroke="#6a5020" stroke-width="1"/>
+        <circle cx="-6" cy="-2" r="12" fill="#2a1a0a" stroke="#6a5020" stroke-width="1"/>
+        <polygon points="-13,-14 -10,-6 -6,-12" fill="#2a1a0a" stroke="#6a5020" stroke-width=".8"/>
+        <circle cx="-6" cy="-3" r="4" fill="#c9a84c" opacity=".7"/><circle cx="-6" cy="-3" r="2" fill="#1a1008"/>
+      </g>
+      <rect x="0" y="440" width="400" height="60" fill="rgba(8,6,4,.92)"/>
+      <text x="200" y="466" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="26" letter-spacing="8" fill="#c9a84c">FREYA</text>
+      <text x="200" y="486" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="10" letter-spacing="4" fill="#6a5020">OF THE VANIR · NORSE GODDESS</text>
+    </svg></div><div class="gii"><div class="gnum">02</div><div class="gtt">Freya of the Vanir</div><div class="gd">Goddess · Brísingamen · Cats</div></div></div>
+
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="yb" cx="50%" cy="60%" r="70%"><stop offset="0%" stop-color="#0a1006"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <radialGradient id="ya" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="#4a7a2a" stop-opacity=".15"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient>
+      <filter id="yg"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <linearGradient id="yt" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2a1a08"/><stop offset="40%" stop-color="#5a3a18"/><stop offset="100%" stop-color="#1a0e04"/></linearGradient></defs>
+      <rect width="400" height="500" fill="url(#yb)"/><rect width="400" height="500" fill="url(#ya)"/>
+      <path d="M180 420Q140 440 80 480" fill="none" stroke="#3a2010" stroke-width="8" stroke-linecap="round"/>
+      <path d="M200 425Q200 460 200 500" fill="none" stroke="#3a2010" stroke-width="6" stroke-linecap="round"/>
+      <path d="M220 420Q250 450 290 490" fill="none" stroke="#3a2010" stroke-width="7" stroke-linecap="round"/>
+      <path d="M185 425Q120 445 60 490" fill="none" stroke="#221408" stroke-width="3" stroke-linecap="round"/>
+      <path d="M215 425Q310 450 360 490" fill="none" stroke="#221408" stroke-width="3" stroke-linecap="round"/>
+      <path d="M60 480Q100 455 140 470Q160 478 155 490Q148 498 138 492Q125 485 130 475Q140 468 160 475" fill="none" stroke="#4a8a2a" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="62" cy="482" rx="10" ry="7" fill="#2a5a18" stroke="#4a8a2a" stroke-width="1"/>
+      <path d="M170 420Q160 350 155 280Q150 200 160 130Q175 80 200 40Q225 80 240 130Q250 200 245 280Q240 350 230 420Z" fill="url(#yt)"/>
+      <path d="M200 390Q200 310 200 230Q200 150 200 70" fill="none" stroke="#6a4020" stroke-width="1.5" opacity=".4"/>
+      <path d="M195 100Q140 80 80 95Q60 100 40 90" fill="none" stroke="#3a2010" stroke-width="9" stroke-linecap="round"/>
+      <path d="M205 100Q260 80 320 95Q340 100 360 90" fill="none" stroke="#3a2010" stroke-width="9" stroke-linecap="round"/>
+      <path d="M178 160Q120 140 70 160Q50 168 30 155" fill="none" stroke="#3a2010" stroke-width="7" stroke-linecap="round"/>
+      <path d="M222 160Q280 140 330 160Q350 168 370 155" fill="none" stroke="#3a2010" stroke-width="7" stroke-linecap="round"/>
+      <g fill="#c9a84c" opacity=".7" filter="url(#yg)">
+        <circle cx="42" cy="88" r="5"/><circle cx="52" cy="80" r="4"/><circle cx="358" cy="88" r="5"/><circle cx="348" cy="80" r="4"/>
+        <circle cx="32" cy="150" r="4"/><circle cx="368" cy="150" r="4"/>
+      </g>
+      <g transform="translate(200,28)">
+        <ellipse cx="0" cy="0" rx="15" ry="8" fill="#2a1808" stroke="#c9a84c" stroke-width="1"/>
+        <circle cx="-8" cy="-8" r="9" fill="#2a1808" stroke="#c9a84c" stroke-width="1"/>
+        <polygon points="-16,-10 -22,-6 -14,-2" fill="#c9a84c"/>
+        <path d="M5-2Q25-18 35-8Q28 2 8 4" fill="#2a1808" stroke="#c9a84c" stroke-width="1"/>
+        <path d="M-5-2Q-25-18-35-8Q-28 2-8 4" fill="#2a1808" stroke="#c9a84c" stroke-width="1"/>
+      </g>
+      <rect x="0" y="450" width="400" height="50" fill="rgba(8,6,4,.92)"/>
+      <text x="200" y="473" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="22" letter-spacing="6" fill="#c9a84c">YGGDRASIL</text>
+      <text x="200" y="491" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="10" letter-spacing="3" fill="#6a5020">WORLD TREE · NINE REALMS</text>
+    </svg></div><div class="gii"><div class="gnum">03</div><div class="gtt">Yggdrasil</div><div class="gd">World Tree · nine realms</div></div></div>
+
+    <div class="gc"><div class="gi"><svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="fnb" cx="50%" cy="45%" r="70%"><stop offset="0%" stop-color="#160806"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <radialGradient id="fna" cx="50%" cy="40%" r="45%"><stop offset="0%" stop-color="#8b2020" stop-opacity=".2"/><stop offset="100%" stop-color="#8b2020" stop-opacity="0"/></radialGradient>
+      <filter id="fng"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="fnr"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <linearGradient id="fnw" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a1a10"/><stop offset="100%" stop-color="#080604"/></linearGradient></defs>
+      <rect width="400" height="500" fill="url(#fnb)"/><rect width="400" height="500" fill="url(#fna)"/>
+      <circle cx="200" cy="160" r="110" fill="#0f0804" stroke="#3a2010" stroke-width="1"/>
+      <path d="M55 280Q80 260 100 275Q115 285 110 300Q105 315 90 310Q75 305 78 290" fill="none" stroke="#6a5020" stroke-width="3"/>
+      <path d="M78 290L65 285L60 275L70 268" fill="none" stroke="#6a5020" stroke-width="3"/>
+      <path d="M345 280Q320 260 300 275Q285 285 290 300Q295 315 310 310Q325 305 322 290" fill="none" stroke="#6a5020" stroke-width="3"/>
+      <path d="M322 290L335 285L340 275L330 268" fill="none" stroke="#6a5020" stroke-width="3"/>
+      <ellipse cx="200" cy="340" rx="130" ry="80" fill="url(#fnw)"/>
+      <path d="M105 200Q95 150 120 120Q150 88 200 85Q250 88 280 120Q305 150 295 200Q290 240 270 260Q240 285 200 288Q160 285 130 260Q110 240 105 200Z" fill="url(#fnw)"/>
+      <polygon points="140,115 120,65 168,100" fill="#2a1808" stroke="#3a2010" stroke-width="1.5"/>
+      <polygon points="260,115 280,65 232,100" fill="#2a1808" stroke="#3a2010" stroke-width="1.5"/>
+      <polygon points="143,112 130,78 163,103" fill="#4a1a0a" opacity=".6"/>
+      <polygon points="257,112 270,78 237,103" fill="#4a1a0a" opacity=".6"/>
+      <path d="M155 235Q175 252 200 255Q225 252 245 235Q252 260 240 278Q220 295 200 295Q180 295 160 278Q148 260 155 235Z" fill="#1a100a"/>
+      <ellipse cx="188" cy="255" rx="8" ry="5" fill="#0a0604"/>
+      <ellipse cx="212" cy="255" rx="8" ry="5" fill="#0a0604"/>
+      <path d="M145 258Q148 280 160 295Q180 315 200 318Q220 315 240 295Q252 280 255 258" fill="#1a0808"/>
+      <polygon points="158,270 164,270 161,295" fill="#d4b483"/>
+      <polygon points="178,266 185,266 182,295" fill="#d4b483"/>
+      <polygon points="200,265 207,265 204,298" fill="#e8c97a"/>
+      <polygon points="215,266 222,266 219,295" fill="#d4b483"/>
+      <polygon points="236,270 242,270 239,295" fill="#d4b483"/>
+      <ellipse cx="158" cy="185" rx="22" ry="18" fill="#1a0a04"/>
+      <ellipse cx="158" cy="185" rx="16" ry="13" fill="#8b2020" filter="url(#fnr)"/>
+      <ellipse cx="158" cy="185" rx="8" ry="6" fill="#ff2020" filter="url(#fng)"/>
+      <ellipse cx="242" cy="185" rx="22" ry="18" fill="#1a0a04"/>
+      <ellipse cx="242" cy="185" rx="16" ry="13" fill="#8b2020" filter="url(#fnr)"/>
+      <ellipse cx="242" cy="185" rx="8" ry="6" fill="#ff2020" filter="url(#fng)"/>
+      <path d="M132 175Q158 162 178 172" fill="#1a0e08" stroke="#2a1808" stroke-width="3"/>
+      <path d="M268 175Q242 162 222 172" fill="#1a0e08" stroke="#2a1808" stroke-width="3"/>
+      <rect x="0" y="450" width="400" height="50" fill="rgba(8,6,4,.92)"/>
+      <text x="200" y="473" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="22" letter-spacing="6" fill="#c9a84c">FENRIR</text>
+      <text x="200" y="491" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="10" letter-spacing="3" fill="#6a5020">THE GREAT WOLF · UNBOUND</text>
+    </svg></div><div class="gii"><div class="gnum">04</div><div class="gtt">Fenrir Unchained</div><div class="gd">The Great Wolf · broken chains</div></div></div>
+  </div>
+</div>
+</section>
+
+<section class="page" id="page-mixed">
+<div class="gp2">
+  <div class="gh"><div class="gn">04</div><div class="gt">Mixed</div><div class="gs">Logo · Art · Pattern</div></div>
+  <div class="mg">
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb1" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#1a1008"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf1"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb1)"/>
+      <circle cx="150" cy="150" r="130" fill="none" stroke="#6a5020" stroke-width="1.5"/>
+      <path id="rp1" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1-236,0"/>
+      <text font-size="11" fill="#6a5020" font-family="serif" letter-spacing="6"><textPath href="#rp1">ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ·ᚠᚢᚦᚨᚱᚲ</textPath></text>
+      <polygon points="150,40 210,130 150,170 90,130" fill="none" stroke="#c9a84c" stroke-width="2.5" filter="url(#mf1)"/>
+      <polygon points="150,170 210,130 210,200 150,240" fill="none" stroke="#9a7a3a" stroke-width="1.5"/>
+      <polygon points="150,170 90,130 90,200 150,240" fill="none" stroke="#b8965a" stroke-width="1.5"/>
+      <text x="138" y="135" font-family="'Bebas Neue',cursive" font-size="32" letter-spacing="4" fill="#c9a84c" filter="url(#mf1)">MP</text>
+      <text x="150" y="268" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="10" letter-spacing="4" fill="#6a5020">MYTHIC PRISM STUDIO</text>
+    </svg></div><div class="mii"><div class="mt">Mythic Prism Logo</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb2" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#160a06"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb2)"/>
+      <polygon points="150,20 280,150 150,280 20,150" fill="none" stroke="#c9a84c" stroke-width="2" filter="url(#mf2)"/>
+      <polygon points="150,30 270,150 150,270 30,150" fill="none" stroke="#6a5020" stroke-width="1"/>
+      <polygon points="150,65 195,105 195,165 150,195 105,165 105,105" fill="#0f0c06" stroke="#9a7a3a" stroke-width="1.5"/>
+      <polygon points="110,108 96,70 135,102" fill="#1a1008" stroke="#c9a84c" stroke-width="1.5"/>
+      <polygon points="190,108 204,70 165,102" fill="#1a1008" stroke="#c9a84c" stroke-width="1.5"/>
+      <ellipse cx="132" cy="128" rx="14" ry="11" fill="#8b2020" filter="url(#mf2)"/>
+      <circle cx="132" cy="128" r="6" fill="#ff2020" opacity=".7"/>
+      <ellipse cx="168" cy="128" rx="14" ry="11" fill="#8b2020" filter="url(#mf2)"/>
+      <circle cx="168" cy="128" r="6" fill="#ff2020" opacity=".7"/>
+      <circle cx="150" cy="22" r="4" fill="#c9a84c"/><circle cx="278" cy="150" r="4" fill="#c9a84c"/>
+      <circle cx="150" cy="278" r="4" fill="#c9a84c"/><circle cx="22" cy="150" r="4" fill="#c9a84c"/>
+      <text x="150" y="252" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="14" letter-spacing="4" fill="#9a7a3a">WOLF SEAL</text>
+    </svg></div><div class="mii"><div class="mt">Wolf Seal</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb3" cx="50%" cy="40%" r="65%"><stop offset="0%" stop-color="#1a1208"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf3"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <linearGradient id="mg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c9a84c"/><stop offset="50%" stop-color="#9a7a3a"/><stop offset="100%" stop-color="#6a5020"/></linearGradient></defs>
+      <rect width="300" height="300" fill="url(#mb3)"/>
+      <rect x="90" y="80" width="120" height="90" rx="8" fill="url(#mg3)" stroke="#c9a84c" stroke-width="2"/>
+      <text x="150" y="138" text-anchor="middle" font-family="serif" font-size="36" fill="#1a1008" opacity=".7">ᚦ</text>
+      <rect x="140" y="170" width="20" height="75" rx="4" fill="url(#mg3)" stroke="#b8965a" stroke-width="1.5"/>
+      <line x1="138" y1="185" x2="162" y2="185" stroke="#6a5020" stroke-width="1.5"/>
+      <line x1="138" y1="200" x2="162" y2="200" stroke="#6a5020" stroke-width="1.5"/>
+      <line x1="138" y1="215" x2="162" y2="215" stroke="#6a5020" stroke-width="1.5"/>
+      <ellipse cx="150" cy="248" rx="15" ry="8" fill="#c9a84c" stroke="#e8c97a" stroke-width="1"/>
+      <path d="M90 125L60 105L70 120L40 100" fill="none" stroke="#e8c97a" stroke-width="2" filter="url(#mf3)"/>
+      <path d="M210 125L240 105L230 120L260 100" fill="none" stroke="#e8c97a" stroke-width="2" filter="url(#mf3)"/>
+      <text x="150" y="285" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="16" letter-spacing="4" fill="#c9a84c">MJOLNIR</text>
+    </svg></div><div class="mii"><div class="mt">Mjolnir · Thor's Hammer</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb4" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#0e0a06"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf4"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb4)"/>
+      <path d="M150 140Q100 90 60 100Q30 110 40 145Q50 175 90 175Q125 175 150 155" fill="#1a1008" stroke="#c9a84c" stroke-width="1.5"/>
+      <path d="M150 140Q200 90 240 100Q270 110 260 145Q250 175 210 175Q175 175 150 155" fill="#1a1008" stroke="#c9a84c" stroke-width="1.5"/>
+      <circle cx="88" cy="138" r="18" fill="none" stroke="#c9a84c" stroke-width="1.5" filter="url(#mf4)"/>
+      <circle cx="88" cy="138" r="11" fill="#2a1808" stroke="#9a7a3a" stroke-width="1"/>
+      <circle cx="88" cy="138" r="5" fill="#c9a84c" opacity=".8"/>
+      <circle cx="212" cy="138" r="18" fill="none" stroke="#c9a84c" stroke-width="1.5" filter="url(#mf4)"/>
+      <circle cx="212" cy="138" r="11" fill="#2a1808" stroke="#9a7a3a" stroke-width="1"/>
+      <circle cx="212" cy="138" r="5" fill="#c9a84c" opacity=".8"/>
+      <path d="M150 158Q100 165 70 190Q55 215 75 230Q100 245 130 225Q148 210 150 190" fill="#1a1008" stroke="#9a7a3a" stroke-width="1.2"/>
+      <path d="M150 158Q200 165 230 190Q245 215 225 230Q200 245 170 225Q152 210 150 190" fill="#1a1008" stroke="#9a7a3a" stroke-width="1.2"/>
+      <ellipse cx="150" cy="155" rx="18" ry="25" fill="#1a1008" stroke="#c9a84c" stroke-width="1.5"/>
+      <ellipse cx="145" cy="150" rx="5" ry="6" fill="#080604" stroke="#9a7a3a" stroke-width=".8"/>
+      <ellipse cx="155" cy="150" rx="5" ry="6" fill="#080604" stroke="#9a7a3a" stroke-width=".8"/>
+      <path d="M143 163L145 161L148 163L151 161L154 163L157 161L159 163" fill="none" stroke="#9a7a3a" stroke-width=".8"/>
+      <path d="M145 130Q130 100 115 90" fill="none" stroke="#9a7a3a" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="113" cy="89" r="3" fill="#c9a84c"/>
+      <path d="M155 130Q170 100 185 90" fill="none" stroke="#9a7a3a" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="187" cy="89" r="3" fill="#c9a84c"/>
+      <text x="150" y="285" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="14" letter-spacing="4" fill="#c9a84c">DEATH MOTH</text>
+    </svg></div><div class="mii"><div class="mt">Death Moth</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb5" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#1a1208"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf5"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb5)"/>
+      <polygon points="150,55 200,140 100,140" fill="none" stroke="#c9a84c" stroke-width="4" filter="url(#mf5)"/>
+      <polygon points="100,200 150,115 200,200" fill="none" stroke="#c9a84c" stroke-width="4" filter="url(#mf5)"/>
+      <polygon points="80,230 220,230 150,100" fill="none" stroke="#9a7a3a" stroke-width="3"/>
+      <circle cx="150" cy="55" r="5" fill="#c9a84c" filter="url(#mf5)"/>
+      <circle cx="100" cy="140" r="4" fill="#9a7a3a"/><circle cx="200" cy="140" r="4" fill="#9a7a3a"/>
+      <text x="150" y="262" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="15" letter-spacing="5" fill="#c9a84c">VALKNUT</text>
+    </svg></div><div class="mii"><div class="mt">Valknut · Odin's Knot</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb6" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#0a100a"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf6"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb6)"/>
+      <circle cx="150" cy="150" r="100" fill="none" stroke="#3a6a1a" stroke-width="22"/>
+      <circle cx="150" cy="150" r="100" fill="none" stroke="#4a8a2a" stroke-width="18"/>
+      <circle cx="150" cy="150" r="100" fill="none" stroke="#2a5a12" stroke-width="1" stroke-dasharray="8 8"/>
+      <ellipse cx="150" cy="46" rx="26" ry="18" fill="#3a6a1a" stroke="#6a9a3a" stroke-width="1.5"/>
+      <circle cx="140" cy="42" r="5" fill="#c9a84c" opacity=".9" filter="url(#mf6)"/>
+      <circle cx="160" cy="42" r="5" fill="#c9a84c" opacity=".9" filter="url(#mf6)"/>
+      <path d="M148 63L145 72M152 63L155 72" fill="none" stroke="#8b2020" stroke-width="2" stroke-linecap="round"/>
+      <text x="150" y="158" text-anchor="middle" font-family="serif" font-size="32" fill="#9a7a3a">ᛟ</text>
+      <text x="150" y="270" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="14" letter-spacing="3" fill="#c9a84c">JÖRMUNGANDR</text>
+    </svg></div><div class="mii"><div class="mt">Jörmungandr</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb7" cx="50%" cy="40%" r="65%"><stop offset="0%" stop-color="#160e08"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf7"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb7)"/>
+      <path d="M100 115Q80 80 60 60Q55 50 65 52Q75 54 78 70" fill="none" stroke="#6a5020" stroke-width="5" stroke-linecap="round"/>
+      <path d="M80 85Q65 70 50 72" fill="none" stroke="#6a5020" stroke-width="3" stroke-linecap="round"/>
+      <path d="M200 115Q220 80 240 60Q245 50 235 52Q225 54 222 70" fill="none" stroke="#6a5020" stroke-width="5" stroke-linecap="round"/>
+      <path d="M220 85Q235 70 250 72" fill="none" stroke="#6a5020" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="150" cy="155" rx="68" ry="78" fill="#1a1008" stroke="#c9a84c" stroke-width="2" filter="url(#mf7)"/>
+      <ellipse cx="124" cy="148" rx="22" ry="25" fill="#080604" stroke="#b8965a" stroke-width="1.5"/>
+      <ellipse cx="176" cy="148" rx="22" ry="25" fill="#080604" stroke="#b8965a" stroke-width="1.5"/>
+      <path d="M143 178L150 170L157 178L154 190L146 190Z" fill="#080604" stroke="#6a5020" stroke-width=".8"/>
+      <line x1="126" y1="199" x2="126" y2="215" stroke="#c9a84c" stroke-width="2.5"/>
+      <line x1="140" y1="202" x2="140" y2="218" stroke="#c9a84c" stroke-width="2.5"/>
+      <line x1="154" y1="204" x2="154" y2="220" stroke="#c9a84c" stroke-width="2.5"/>
+      <line x1="168" y1="202" x2="168" y2="218" stroke="#c9a84c" stroke-width="2.5"/>
+      <circle cx="90" cy="240" r="7" fill="none" stroke="#8b2020" stroke-width="1.5"/><circle cx="90" cy="240" r="3" fill="#6b1a1a"/>
+      <circle cx="210" cy="240" r="7" fill="none" stroke="#8b2020" stroke-width="1.5"/><circle cx="210" cy="240" r="3" fill="#6b1a1a"/>
+      <text x="150" y="285" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="14" letter-spacing="3" fill="#c9a84c">NORDIC SKULL</text>
+    </svg></div><div class="mii"><div class="mt">Nordic Skull</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb8" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#14100a"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf8"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb8)"/>
+      <circle cx="150" cy="150" r="128" fill="none" stroke="#6a5020" stroke-width="1"/>
+      <path id="rw" d="M150,150 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1-230,0"/>
+      <text font-size="22" fill="#c9a84c" font-family="serif" filter="url(#mf8)"><textPath href="#rw" letter-spacing="4">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ</textPath></text>
+      <circle cx="150" cy="150" r="50" fill="none" stroke="#9a7a3a" stroke-width="1"/>
+      <circle cx="150" cy="150" r="22" fill="#0f0c06" stroke="#c9a84c" stroke-width="2" filter="url(#mf8)"/>
+      <text x="150" y="158" text-anchor="middle" font-family="serif" font-size="26" fill="#c9a84c">ᛟ</text>
+      <text x="150" y="278" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="13" letter-spacing="4" fill="#9a7a3a">ELDER FUTHARK</text>
+    </svg></div><div class="mii"><div class="mt">Elder Futhark Wheel</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb9" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#140e06"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <radialGradient id="ir" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fdf6e8"/><stop offset="30%" stop-color="#c9a84c"/><stop offset="65%" stop-color="#6a5020"/><stop offset="100%" stop-color="#1a1008"/></radialGradient>
+      <filter id="mf9"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb9)"/>
+      <polygon points="150,52 268,228 32,228" fill="#0f0c06" stroke="#c9a84c" stroke-width="2.5" filter="url(#mf9)"/>
+      <polygon points="150,68 255,222 45,222" fill="none" stroke="#6a5020" stroke-width="1"/>
+      <path d="M100 158Q150 110 200 158Q150 206 100 158Z" fill="#0f0c06" stroke="#c9a84c" stroke-width="2"/>
+      <ellipse cx="150" cy="158" rx="35" ry="35" fill="url(#ir)" filter="url(#mf9)"/>
+      <ellipse cx="150" cy="158" rx="12" ry="12" fill="#0a0806"/>
+      <circle cx="143" cy="152" r="4" fill="white" opacity=".4"/>
+      <g stroke="#c9a84c" stroke-width="1" opacity=".4">
+        <line x1="150" y1="52" x2="150" y2="38"/><line x1="200" y1="70" x2="212" y2="60"/>
+        <line x1="100" y1="70" x2="88" y2="60"/>
+      </g>
+      <rect x="32" y="228" width="236" height="26" fill="#0f0c06" stroke="#c9a84c" stroke-width="1"/>
+      <text x="150" y="245" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="9" letter-spacing="4" fill="#9a7a3a">ALL SEEING · ALL KNOWING</text>
+      <text x="150" y="285" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="14" letter-spacing="4" fill="#c9a84c">EYE OF ODIN</text>
+    </svg></div><div class="mii"><div class="mt">Eye of Odin</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb10" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#12101a"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf10"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <linearGradient id="mg10" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#c9a84c"/><stop offset="50%" stop-color="#8b2020"/><stop offset="100%" stop-color="#2a5a8a"/></linearGradient></defs>
+      <rect width="300" height="300" fill="url(#mb10)"/>
+      <path d="M150 145L260 100" fill="none" stroke="#c9a84c" stroke-width="2" opacity=".4"/>
+      <path d="M150 150L268 175" fill="none" stroke="#8b2020" stroke-width="2" opacity=".35"/>
+      <path d="M150 155L235 240" fill="none" stroke="#4a8a2a" stroke-width="1.5" opacity=".3"/>
+      <path d="M40 150L148 150" fill="none" stroke="#fdf6e8" stroke-width="3" opacity=".6" filter="url(#mf10)"/>
+      <polygon points="148,100 190,150 148,200 106,150" fill="#0f0c18" stroke="#c9a84c" stroke-width="2" filter="url(#mf10)"/>
+      <polygon points="148,100 190,150 148,200 106,150" fill="url(#mg10)" opacity=".15"/>
+      <circle cx="148" cy="150" r="8" fill="#c9a84c" opacity=".8" filter="url(#mf10)"/>
+      <circle cx="148" cy="150" r="4" fill="#fdf6e8"/>
+      <text x="75" y="80" font-size="16" fill="#6a5020" font-family="serif" opacity=".6">ᚠ</text>
+      <text x="218" y="255" font-size="16" fill="#6a5020" font-family="serif" opacity=".5">ᛏ</text>
+      <text x="150" y="278" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="14" letter-spacing="4" fill="#c9a84c">PRISMATIC CRYSTAL</text>
+    </svg></div><div class="mii"><div class="mt">Prismatic Crystal</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb11" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#100e08"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf11"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb11)"/>
+      <circle cx="150" cy="148" r="128" fill="none" stroke="#6a5020" stroke-width="1.5"/>
+      <path d="M148 148Q110 100 75 90Q55 88 50 105Q48 120 65 128Q80 135 100 128Q120 120 138 140" fill="none" stroke="#2a2014" stroke-width="18" stroke-linecap="round"/>
+      <path d="M152 148Q190 100 225 90Q245 88 250 105Q252 120 235 128Q220 135 200 128Q180 120 162 140" fill="none" stroke="#2a2014" stroke-width="18" stroke-linecap="round"/>
+      <circle cx="52" cy="106" r="18" fill="#1a1808" stroke="#c9a84c" stroke-width="1.5"/>
+      <polygon points="34,103 45,97 40,110" fill="#c9a84c"/>
+      <circle cx="58" cy="102" r="5" fill="#c9a84c" opacity=".9" filter="url(#mf11)"/>
+      <circle cx="248" cy="106" r="18" fill="#1a1808" stroke="#c9a84c" stroke-width="1.5"/>
+      <polygon points="266,103 255,97 260,110" fill="#c9a84c"/>
+      <circle cx="242" cy="102" r="5" fill="#c9a84c" opacity=".9" filter="url(#mf11)"/>
+      <ellipse cx="150" cy="175" rx="28" ry="18" fill="#0f0c06" stroke="#c9a84c" stroke-width="1.5" filter="url(#mf11)"/>
+      <circle cx="150" cy="175" r="8" fill="#c9a84c" opacity=".5" filter="url(#mf11)"/>
+      <circle cx="150" cy="175" r="4" fill="#fdf6e8"/>
+      <text x="105" y="75" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="8" letter-spacing="2" fill="#6a5020">HUGINN</text>
+      <text x="195" y="75" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="8" letter-spacing="2" fill="#6a5020">MUNINN</text>
+      <text x="150" y="268" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="13" letter-spacing="4" fill="#9a7a3a">HUGINN · MUNINN</text>
+    </svg></div><div class="mii"><div class="mt">Raven Twins</div></div></div>
+
+    <div class="mc"><div class="mi"><svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mb12" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#0e0c16"/><stop offset="100%" stop-color="#080604"/></radialGradient>
+      <filter id="mf12"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect width="300" height="300" fill="url(#mb12)"/>
+      <path d="M150 140Q105 100 65 90Q40 88 38 110Q36 132 60 140Q85 148 115 140Q138 135 150 148" fill="#1a1620" stroke="#c9a84c" stroke-width="1.5"/>
+      <path d="M150 140Q195 100 235 90Q260 88 262 110Q264 132 240 140Q215 148 185 140Q162 135 150 148" fill="#1a1620" stroke="#c9a84c" stroke-width="1.5"/>
+      <path d="M130 200Q120 230 115 270L185 270Q180 230 170 200Q160 185 150 183Q140 185 130 200Z" fill="#1a1010"/>
+      <path d="M128 175Q140 165 150 163Q160 165 172 175Q168 195 150 200Q132 195 128 175Z" fill="#2a1808" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="195" y1="80" x2="155" y2="260" stroke="#9a7a3a" stroke-width="3"/>
+      <polygon points="195,80 188,102 202,102" fill="#c9a84c"/>
+      <ellipse cx="150" cy="145" rx="25" ry="28" fill="#2a1808" stroke="#c9a84c" stroke-width="1.5"/>
+      <path d="M128 138Q112 128 105 135Q108 145 122 142" fill="#c9a84c" opacity=".8"/>
+      <path d="M172 138Q188 128 195 135Q192 145 178 142" fill="#c9a84c" opacity=".8"/>
+      <ellipse cx="150" cy="152" rx="14" ry="16" fill="#c9a84c" opacity=".8"/>
+      <ellipse cx="144" cy="150" rx="5" ry="4" fill="#1a0a04"/>
+      <ellipse cx="156" cy="150" rx="5" ry="4" fill="#1a0a04"/>
+      <circle cx="144" cy="150" r="2" fill="#c9a84c" opacity=".7" filter="url(#mf12)"/>
+      <circle cx="156" cy="150" r="2" fill="#c9a84c" opacity=".7" filter="url(#mf12)"/>
+      <text x="150" y="290" text-anchor="middle" font-family="'Bebas Neue',cursive" font-size="15" letter-spacing="4" fill="#c9a84c">VALKYRIE</text>
+    </svg></div><div class="mii"><div class="mt">Valkyrie</div></div></div>
+  </div>
+
+  <div class="str">
+    <a href="https://mythic-prism-studio-shop.fourthwall.com" target="_blank" class="stl">
+      <div class="std" style="background:#7b5ea7"></div><div class="stn">Fourthwall</div><div class="sts">Main Store</div>
+    </a>
+    <a href="https://wwwmythosprismcom.creator-spring.com" target="_blank" class="stl">
+      <div class="std" style="background:#00a65a"></div><div class="stn">Spring</div><div class="sts">Merch Store</div>
+    </a>
+    <a href="#" target="_blank" class="stl">
+      <div class="std" style="background:#00c4a7"></div><div class="stn">Flyp</div><div class="sts">Social Commerce</div>
+    </a>
+    <a href="https://app.amazecommerce.com/shop/mythic-prism-studio" target="_blank" class="stl">
+      <div class="std" style="background:#c9a84c"></div><div class="stn">AmazeCommerce</div><div class="sts">Digital Store</div>
+    </a>
+  </div>
+</div>
+</section>
+
+<script>
+function sp(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+n).classList.add('active');document.getElementById('nb-'+n).classList.add('active');window.scrollTo(0,0);n==='home'?ssFX():stopFX();}
+const bgC=document.getElementById('bg'),bgX=bgC.getContext('2d');
+let W=0,H=0,figs=[],T=0;
+const pal=[[201,168,76],[184,150,90],[154,122,58],[106,80,32],[139,38,32],[232,201,122]];
+const rv=(a,b)=>a+(b-a)*Math.random();
+function pE(cx,cy,rx,ry,n,s){const p=[];for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=Math.sqrt(Math.random());p.push({x:cx+rx*v*Math.cos(a)+rv(-s,s),y:cy+ry*v*Math.sin(a)+rv(-s,s)});}return p;}
+function pL(x1,y1,x2,y2,n,s){const p=[];for(let i=0;i<n;i++){const t=Math.random();p.push({x:x1+(x2-x1)*t+rv(-s,s),y:y1+(y2-y1)*t+rv(-s,s)});}return p;}
+function pA(cx,cy,r,a0,a1,n,s){const p=[];for(let i=0;i<n;i++){const a=a0+(a1-a0)*Math.random();p.push({x:cx+r*Math.cos(a)+rv(-s,s),y:cy+r*Math.sin(a)+rv(-s,s)});}return p;}
+function pB(x0,y0,cx1,cy1,cx2,cy2,x1,y1,n,s){const p=[];for(let i=0;i<n;i++){const t=Math.random(),m=1-t;p.push({x:m*m*m*x0+3*m*m*t*cx1+3*m*t*t*cx2+t*t*t*x1+rv(-s,s),y:m*m*m*y0+3*m*m*t*cy1+3*m*t*t*cy2+t*t*t*y1+rv(-s,s)});}return p;}
+const BD=[(S)=>{const p=[];p.push(...pE(S.x,S.y,S.w*.45,S.h*.3,200,S.w*.02));p.push(...pA(S.x,S.y,S.w*.18,0,Math.PI*2,120,S.w*.01));for(let i=0;i<8;i++){const a=i*Math.PI/4;p.push(...pL(S.x+S.w*.2*Math.cos(a),S.y+S.h*.14*Math.sin(a),S.x+S.w*.42*Math.cos(a),S.y+S.h*.28*Math.sin(a),20,S.w*.01));}return p;},
+(S)=>{const p=[];p.push(...pE(S.x,S.y-S.h*.1,S.w*.38,S.h*.38,300,S.w*.02));p.push(...pE(S.x-S.w*.12,S.y-.05*S.h,S.w*.1,S.h*.12,60,S.w*.01));p.push(...pE(S.x+S.w*.12,S.y-.05*S.h,S.w*.1,S.h*.12,60,S.w*.01));p.push(...pL(S.x-S.w*.12,S.y+S.h*.15,S.x+S.w*.12,S.y+S.h*.15,40,S.w*.01));return p;},
+(S)=>{const p=[];p.push(...pB(S.x,S.y,S.x-S.w*.5,S.y-S.h*.5,S.x-S.w*.8,S.y+S.h*.2,S.x-S.w*.3,S.y+S.h*.4,150,S.w*.02));p.push(...pB(S.x,S.y,S.x+S.w*.5,S.y-S.h*.5,S.x+S.w*.8,S.y+S.h*.2,S.x+S.w*.3,S.y+S.h*.4,150,S.w*.02));p.push(...pE(S.x,S.y,S.w*.12,S.h*.18,80,S.w*.01));return p;},
+(S)=>{const p=[];const r1=S.w*.42;for(let i=0;i<5;i++){const a=i*Math.PI*.4-Math.PI*.5,b=((i+2)%5)*Math.PI*.4-Math.PI*.5;p.push(...pL(S.x+r1*Math.cos(a),S.y+r1*Math.sin(a),S.x+r1*Math.cos(b),S.y+r1*Math.sin(b),40,S.w*.01));}p.push(...pA(S.x,S.y,r1,0,Math.PI*2,100,S.w*.01));return p;},
+(S)=>{const p=[];p.push(...pB(S.x-S.w*.4,S.y,S.x-S.w*.4,S.y-S.h*.6,S.x,S.y-S.h*.6,S.x,S.y-S.h*.3,120,S.w*.02));p.push(...pB(S.x+S.w*.4,S.y,S.x+S.w*.4,S.y-S.h*.6,S.x,S.y-S.h*.6,S.x,S.y-S.h*.3,120,S.w*.02));p.push(...pE(S.x,S.y-S.h*.1,S.w*.35,S.h*.35,200,S.w*.02));return p;},
+(S)=>{const p=[];p.push(...pA(S.x,S.y,S.w*.38,0,Math.PI*2,300,S.w*.03));p.push(...pE(S.x,S.y-S.h*.38,S.w*.09,S.h*.07,40,S.w*.01));return p;}];
+class GF{constructor(){this.reset(true);}reset(i=false){this.x=rv(W*.05,W*.95);this.y=i?rv(0,H):rv(H*.1,H*.9);this.w=rv(W*.08,W*.18);this.h=this.w*rv(.9,1.3);this.b=BD[Math.floor(Math.random()*BD.length)];this.pts=this.b({x:0,y:0,w:this.w,h:this.h});this.col=pal[Math.floor(Math.random()*pal.length)];this.ba=rv(.018,.046);this.ph=Math.random()*Math.PI*2;this.sp=rv(.004,.012);this.rot=rv(-Math.PI,Math.PI);this.rs=rv(-.0008,.0008);this.life=0;this.ml=rv(400,900);this.dx=rv(-.08,.08);this.dy=rv(-.04,.04);}draw(ctx,t){this.life++;if(this.life>this.ml){this.reset();return;}const fd=Math.min(this.life/80,1)*Math.min((this.ml-this.life)/80,1);const br=.7+.3*Math.sin(t*this.sp+this.ph);this.x+=this.dx;this.y+=this.dy;this.rot+=this.rs;ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.rot);const[r2,g,b]=this.col;for(const pt of this.pts){ctx.globalAlpha=this.ba*fd*br*(.5+Math.random()*.5);ctx.fillStyle=`rgb(${r2},${g},${b})`;ctx.beginPath();ctx.arc(pt.x+rv(-1.5,1.5),pt.y+rv(-1.5,1.5),rv(.8,2.2),0,Math.PI*2);ctx.fill();}ctx.restore();}}
+function rsz(){bgC.width=W=window.innerWidth;bgC.height=H=window.innerHeight;figs=[];for(let i=0;i<12;i++)figs.push(new GF());}
+function bgL(){bgX.clearRect(0,0,W,H);T++;figs.forEach(f=>f.draw(bgX,T));requestAnimationFrame(bgL);}
+window.addEventListener('resize',rsz);rsz();bgL();
+const sC=document.getElementById('sc'),sX=sC.getContext('2d');
+let sps=[],srun=false,said=null;
+function rsc2(){sC.width=window.innerWidth;sC.height=window.innerHeight;}
+window.addEventListener('resize',rsc2);rsc2();
+class SP{constructor(){this.reset();}reset(){this.x=Math.random()*sC.width;this.y=-10;this.vx=rv(-.5,.5);this.vy=rv(1.5,3.5);this.sz=rv(2,4);this.a=rv(.4,.8);this.sand=true;this.m=0;}update(){const fl=sC.height*.85;if(this.sand){this.x+=this.vx;this.y+=this.vy;this.vy+=.04;if(this.y>=fl){this.y=fl;this.vy*=-.1;this.sand=false;this.m=0;}}else{this.m+=.04;if(this.m>1)this.a-=.015;if(this.a<=0)this.reset();}}draw(c){c.save();c.globalAlpha=this.a;if(this.sand){c.fillStyle='#c9a84c';c.beginPath();c.arc(this.x,this.y,this.sz,0,Math.PI*2);c.fill();}else{const s=this.sz*(1+Math.min(this.m,1)*.8);c.strokeStyle='#c9a84c';c.lineWidth=.8;c.beginPath();c.arc(this.x,this.y-s*.1,s,0,Math.PI*2);c.stroke();c.fillStyle='#080604';c.beginPath();c.ellipse(this.x-s*.35,this.y+s*.05,s*.2,s*.25,0,0,Math.PI*2);c.fill();c.beginPath();c.ellipse(this.x+s*.35,this.y+s*.05,s*.2,s*.25,0,0,Math.PI*2);c.fill();c.strokeStyle='#9a7a3a';c.beginPath();c.moveTo(this.x-s*.3,this.y+s*.5);for(let i=0;i<4;i++)c.lineTo(this.x-s*.3+i*s*.2,this.y+s*(i%2===0?.35:.5));c.lineTo(this.x+s*.3,this.y+s*.5);c.stroke();}c.restore();}}
+function skL(){sX.clearRect(0,0,sC.width,sC.height);if(Math.random()<.3)sps.push(new SP());if(sps.length>220)sps.splice(0,20);sps.forEach(p=>{p.update();p.draw(sX);});said=requestAnimationFrame(skL);}
+function ssFX(){sC.style.opacity='1';if(!srun){srun=true;skL();}}
+function stopFX(){sC.style.opacity='0';if(said){cancelAnimationFrame(said);said=null;srun=false;}sps=[];}
+ssFX();
+</script>
+</body></html>
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
