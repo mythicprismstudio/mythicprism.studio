@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gothic Cappadocia — Surreal Realism Digital Art Collection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'media',
+    theme: {
+      extend: {
+        colors: {
+          crimson: { DEFAULT: '#7a1f2b', light: '#a83246' },
+          bone: { DEFAULT: '#e8e2d6', dim: '#c9c2b2' },
+          ink: { DEFAULT: '#0b0e14', soft: '#141822' },
+        },
+        fontFamily: {
+          serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+        },
+        boxShadow: {
+          glow: '0 0 40px rgba(168, 50, 70, 0.35)',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root { color-scheme: light dark; }
+
+  body {
+    background: #0b0e14;
+    color: #e8e2d6;
+  }
+  @media (prefers-color-scheme: light) {
+    body { background: #f2ede1; color: #1d1a16; }
+  }
+
+  .fog {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 100%, rgba(168,50,70,0.10), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 80% 90%, rgba(90,60,120,0.12), transparent 60%);
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    0% { transform: translateX(-2%) translateY(0); }
+    100% { transform: translateX(2%) translateY(-1%); }
+  }
+
+  .moon {
+    width: clamp(100px, 14vw, 200px);
+    height: clamp(100px, 14vw, 200px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fffef8, #f1e9d2 55%, #d8cba3 100%);
+    box-shadow: 0 0 60px 20px rgba(255, 250, 230, 0.35), 0 0 140px 60px rgba(255, 250, 230, 0.12);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.08); }
+  }
+
+  .peaks {
+    clip-path: polygon(
+      0% 100%, 0% 70%, 8% 55%, 14% 68%, 22% 40%, 30% 62%, 38% 35%,
+      46% 58%, 54% 30%, 60% 20%, 66% 45%, 74% 25%, 82% 50%, 90% 38%,
+      96% 60%, 100% 48%, 100% 100%
+    );
+    background: #05060a;
+  }
+  @media (prefers-color-scheme: light) {
+    .peaks { background: #2a2118; }
+  }
+
+  .rise {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .rise.in { opacity: 1; transform: translateY(0); }
+
+  .card {
+    background: rgba(20, 24, 34, 0.55);
+    border: 1px solid rgba(168, 50, 70, 0.25);
+    backdrop-filter: blur(6px);
+  }
+  @media (prefers-color-scheme: light) {
+    .card { background: rgba(255, 255, 255, 0.65); border-color: rgba(122, 31, 43, 0.2); }
+  }
+
+  .buy-btn {
+    background: linear-gradient(135deg, #a83246, #7a1f2b);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .buy-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168,50,70,0.45); }
+  .buy-btn:active { transform: translateY(0); }
+
+  .art-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+  }
+  .art-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .art-frame:hover img { transform: scale(1.06); }
+  .art-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(11,14,20,0.65), transparent 45%);
+    pointer-events: none;
+  }
+  @media (prefers-color-scheme: light) {
+    .art-frame::after { background: linear-gradient(to top, rgba(30,20,15,0.45), transparent 45%); }
+  }
+
+  .modal-backdrop { backdrop-filter: blur(4px); }
+
+  ::selection { background: #a83246; color: #fff; }
+
+  .lightbox-img {
+    max-height: 80vh;
+    max-width: 90vw;
+    object-fit: contain;
+  }
+</style>
+</head>
+<body class="font-serif min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient sky / moon / fog -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0b0e14] via-[#141822] to-[#1c1420]"></div>
+    <div class="fog"></div>
+    <div class="absolute top-10 right-10 md:top-16 md:right-24 moon"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-40 md:h-64 peaks"></div>
+  </div>
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-crimson text-white px-4 py-2 rounded z-50">Skip to content</a>
+
+  <header class="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
+    <span class="tracking-[0.25em] text-xs md:text-sm uppercase text-bone-dim">World Gothic Atlas</span>
+    <a data-gumroad-action="buy" href="#buy" class="hidden sm:inline-block buy-btn text-white text-sm px-5 py-2 rounded-full shadow-glow cursor-pointer">
+      Claim the Collection
+    </a>
+  </header>
+
+  <main id="main" class="relative z-10">
+
+    <!-- Hero -->
+    <section class="px-6 md:px-12 pt-6 md:pt-14 pb-16 md:pb-20 max-w-5xl mx-auto text-center">
+      <p class="rise text-crimson-light text-xs md:text-sm tracking-[0.3em] uppercase mb-4">Surreal Realism Digital Art</p>
+      <h1 data-gumroad-field="name" class="rise text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+        Gothic Cappadocia — Surreal Realism Digital Art Collection
+      </h1>
+      <p data-gumroad-field="description" class="rise text-base md:text-lg text-bone-dim max-w-2xl mx-auto leading-relaxed">
+        Step into a darker Cappadocia — hand-edited, hyper-detailed compositions built from real Cappadocia photography and transformed with a painterly gothic-surrealist treatment: deep shadows, atmospheric fog, and cinematic color grading that holds up at large print sizes.
+      </p>
+
+      <div class="rise mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a id="buy" data-gumroad-action="buy" class="buy-btn text-white text-base md:text-lg font-medium px-8 py-4 rounded-full shadow-glow cursor-pointer w-full sm:w-auto text-center">
+          Claim the Collection — <span data-gumroad-field="price">$12</span>
+        </a>
+        <button type="button" onclick="document.getElementById('preview-modal').classList.remove('hidden')" class="text-sm md:text-base underline decoration-crimson-light/60 underline-offset-4 hover:text-crimson-light transition-colors">
+          Preview the full-size art
+        </button>
+      </div>
+
+      <div class="rise mt-8 flex items-center justify-center gap-2 text-sm text-bone-dim">
+        <span aria-hidden="true">★★★★★</span>
+        <span data-gumroad-field="rating">Be the first to review</span>
+        <span data-gumroad-field="review-count"></span>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="px-6 md:px-12 pb-20 md:pb-28 max-w-6xl mx-auto grid gap-6 md:grid-cols-3">
+
+      <button type="button" onclick="openLightbox(0)" class="rise art-frame aspect-[3/4] block w-full text-left cursor-zoom-in" aria-label="View full size: Clifftop moonlit citadel">
+        <img src="__IMG1__" alt="A gothic clifftop citadel in Cappadocia beneath a glowing moon, gothic-surrealist digital art" loading="lazy" />
+        <span class="absolute bottom-3 left-4 text-white text-sm md:text-base font-medium drop-shadow">Clifftop Moonlit Citadel</span>
+      </button>
+
+      <button type="button" onclick="openLightbox(1)" class="rise art-frame aspect-[3/4] block w-full text-left cursor-zoom-in" style="transition-delay:0.1s" aria-label="View full size: Firelit rock spire cottage">
+        <img src="__IMG2__" alt="A firelit cottage nested inside a Cappadocia rock spire at dusk, gothic-surrealist digital art" loading="lazy" />
+        <span class="absolute bottom-3 left-4 text-white text-sm md:text-base font-medium drop-shadow">Firelit Rock Spire Dwelling</span>
+      </button>
+
+      <button type="button" onclick="openLightbox(2)" class="rise art-frame aspect-[3/4] block w-full text-left cursor-zoom-in" style="transition-delay:0.2s" aria-label="View full size: Moonlit stone staircase passage">
+        <img src="__IMG3__" alt="A stone staircase winding through Cappadocia rock formations toward a full moon, gothic-surrealist digital art" loading="lazy" />
+        <span class="absolute bottom-3 left-4 text-white text-sm md:text-base font-medium drop-shadow">Moonlit Stone Passage</span>
+      </button>
+
+    </section>
+
+    <!-- What's inside -->
+    <section class="px-6 md:px-12 pb-20 md:pb-28 max-w-4xl mx-auto">
+      <h2 class="rise text-2xl md:text-3xl font-semibold text-center mb-10">What You Receive</h2>
+      <ul class="rise grid gap-4 sm:grid-cols-2 text-sm md:text-base text-bone-dim">
+        <li class="card rounded-xl p-4 flex gap-3"><span class="text-crimson-light" aria-hidden="true">✦</span> 3 high-resolution gothic-surrealist compositions, print-ready</li>
+        <li class="card rounded-xl p-4 flex gap-3"><span class="text-crimson-light" aria-hidden="true">✦</span> Painterly color grading built from real Cappadocia photography</li>
+        <li class="card rounded-xl p-4 flex gap-3"><span class="text-crimson-light" aria-hidden="true">✦</span> Instant digital delivery, no waiting</li>
+        <li class="card rounded-xl p-4 flex gap-3"><span class="text-crimson-light" aria-hidden="true">✦</span> Full personal &amp; commercial usage rights</li>
+      </ul>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="px-6 md:px-12 pb-24 md:pb-32 max-w-3xl mx-auto text-center">
+      <h2 class="rise text-2xl md:text-4xl font-bold mb-4">A darker Cappadocia awaits.</h2>
+      <p class="rise text-bone-dim mb-8">Step through and make these worlds your own.</p>
+      <a data-gumroad-action="buy" class="rise buy-btn inline-block text-white text-base md:text-lg font-medium px-8 py-4 rounded-full shadow-glow cursor-pointer">
+        Claim the Collection — <span data-gumroad-field="price">$12</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="relative z-10 text-center text-xs text-bone-dim/70 pb-10 px-6">
+    World Gothic Atlas — crafted for wanderers of moonlit ruin.
+  </footer>
+
+  <!-- Info modal -->
+  <div id="preview-modal" class="hidden fixed inset-0 z-50 modal-backdrop bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Collection preview">
+    <div class="card rounded-2xl max-w-lg w-full p-6 md:p-8 relative">
+      <button type="button" onclick="document.getElementById('preview-modal').classList.add('hidden')" aria-label="Close preview" class="absolute top-3 right-3 text-bone-dim hover:text-crimson-light text-xl leading-none">&times;</button>
+      <h3 class="text-xl font-semibold mb-4">Three Scenes in the Collection</h3>
+      <ol class="text-sm text-bone-dim space-y-3 list-decimal list-inside">
+        <li><strong class="text-bone">Clifftop Moonlit Citadel</strong> — a gothic fortress beneath a glowing full moon.</li>
+        <li><strong class="text-bone">Firelit Rock Spire Dwelling</strong> — a cottage aglow inside a twin rock spire.</li>
+        <li><strong class="text-bone">Moonlit Stone Passage</strong> — a stairway winding toward a black, moonlit sky.</li>
+      </ol>
+      <a data-gumroad-action="buy" class="buy-btn block text-center text-white mt-6 px-6 py-3 rounded-full cursor-pointer">
+        Claim the Collection
+      </a>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="hidden fixed inset-0 z-50 modal-backdrop bg-black/80 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Full-size artwork viewer">
+    <button type="button" onclick="closeLightbox()" aria-label="Close" class="absolute top-4 right-5 text-white text-3xl leading-none hover:text-crimson-light">&times;</button>
+    <button type="button" onclick="navLightbox(-1)" aria-label="Previous image" class="absolute left-3 md:left-8 text-white text-3xl hover:text-crimson-light">&#10094;</button>
+    <img id="lightbox-img" class="lightbox-img rounded-lg" src="" alt="" />
+    <button type="button" onclick="navLightbox(1)" aria-label="Next image" class="absolute right-3 md:right-8 text-white text-3xl hover:text-crimson-light">&#10095;</button>
+  </div>
+
+  <script>
+    var artSources = ["__IMG1__", "__IMG2__", "__IMG3__"];
+    var artAlts = [
+      "Clifftop Moonlit Citadel — gothic-surrealist digital art",
+      "Firelit Rock Spire Dwelling — gothic-surrealist digital art",
+      "Moonlit Stone Passage — gothic-surrealist digital art"
+    ];
+    var currentIdx = 0;
+
+    function openLightbox(idx) {
+      currentIdx = idx;
+      var img = document.getElementById('lightbox-img');
+      img.src = artSources[idx];
+      img.alt = artAlts[idx];
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+    }
+    function navLightbox(delta) {
+      currentIdx = (currentIdx + delta + artSources.length) % artSources.length;
+      var img = document.getElementById('lightbox-img');
+      img.src = artSources[currentIdx];
+      img.alt = artAlts[currentIdx];
+    }
+
+    var lightbox = document.getElementById('lightbox');
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    var modal = document.getElementById('preview-modal');
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeLightbox(); modal.classList.add('hidden'); }
+      if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'ArrowRight') navLightbox(1);
+        if (e.key === 'ArrowLeft') navLightbox(-1);
+      }
+    });
+
+    // Reveal-on-scroll
+    var els = document.querySelectorAll('.rise');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(function (el) { io.observe(el); });
+  </script>
+</body>
+</html>
